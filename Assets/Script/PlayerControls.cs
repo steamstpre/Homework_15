@@ -36,12 +36,19 @@ public class PlayerControls : MonoBehaviour {
         transform.position += direction * Speed * Time.deltaTime;
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, _borders.minx, _borders.maxx),
           Mathf.Clamp(transform.position.y, _borders.miny,_borders.maxy),transform.position.z);
-       
+
+
+        {
+            transform.Translate(Input.acceleration.x, 0, -Input.acceleration.z);
+        }
 
     }
+
+}
     [System.Serializable]
     public class Borders
     {
         public float miny, maxy, minx, maxx;
     }
-}
+
+

@@ -6,6 +6,13 @@ public class GameController : MonoBehaviour
 {
     public GameObject hazard;
 
+  
+    public Vector3 spawnValues;
+    public int hazardCount;
+    public float spawnWait;
+    public float startWait;
+    public float waveWait;
+
     void Start()
     {
         StartCoroutine(SpawnWaves());
@@ -13,38 +20,19 @@ public class GameController : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(startWait);
         while (true)
         {
-            for (int i = 0; i < 10f; i++)
+            for (int i = 0; i < hazardCount; i++)
             {
-
-                Vector3 camera = Camera.main.transform.position;
-                Vector3 spawnPosition = new Vector3(Random.Range(-camera.x - 5f, camera.x + 5f), camera.y + 10f, 0f);
+                Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(hazard, spawnPosition, spawnRotation);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(spawnWait);
             }
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(waveWait);
         }
-    }
-    private void Update()
-    {
-        if (Input.touchCount > 0)
-        {
 
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                Debug.Log("Touch Began");
-            }
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                Debug.Log("Touch Moved");
-            }
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                Debug.Log("Touch Ended");
-            }
-        }
     }
+       
 }
